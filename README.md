@@ -1,10 +1,10 @@
 # tachyon
-Cross platform dynamic link library and component interface abstraction.
+Tachyon is a cross platform abstraction for importing dynamic link libraries and a framework for a plugin/component interface abstraction.
 
 
-<H1>PART 1<br>How To Make a Tachyon Component/Module</H1>
+<H1>PART 1<br>Making a Tachyon Plugin/Component/Module</H1>
 
-Using tachyon is easy.  There is a simple pattern to follow to get up running quickly.
+Use this example pattern to get up and running quickly.
 
 1) Include the tachyon component header : component.hpp
 
@@ -26,7 +26,7 @@ public:
 
 3) Always add virtual destructors to every class
 
-4) If using a Contract or Interface, create a second Implementation class and inherit from your Interface.
+4) If using a Contract or Interface, create a second Implementation class and inherit from the Interface.
 
 5) Make sure your constructor is <strong>protected</strong> and make sure you have a static function to create new instances as shown below in the Create method. The static method can be named whatever you like, the important thing is that it takes no parameters and returns a pointer to a tachyon::Component (The importantance of this will become clear later).
 
@@ -49,7 +49,7 @@ protected:
 
 ```
 
-6) Next you need to export a "C" function that tachyon MasterFactory will be able to find when it loads your dynamic link library. This function must have the following signature but can be placed in any h file in your project.
+6) Next, export a "C" function with this specific signature that the tachyon MasterFactory will be able to find when it loads the dynamic link library. This function must have the following signature.
 
 ```c++
 
@@ -60,7 +60,7 @@ extern "C"
 
 ```
 
-7) Now add your implementation code to one or more .cpp files
+7) Now add the implementation code to one or more .cpp files
 
 ```c++
 
@@ -107,7 +107,7 @@ The InitLibrary method registers with the MasterFactory and provides a searchabl
 Make sure to define the preprocessor symbol BUILD_SHARED
 
 <H2>Windows Only</H2>
-Make sure to include a standard dllmain.cpp in your project
+Make sure to include a standard dllmain.cpp in the project
 
 ```c++
 
@@ -136,13 +136,13 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
 <H1>PART 2<br>Creating a main program that uses tachyon modules</H1>
 
-1) Create your main.cpp file
+1) Create the main.cpp file
 
 2) Include component.hpp from tachyon
 
 3) Save a reference to the tachyon::MasterFactory
 
-4) Load your dynamic link library. The module name you pass to MasterFactory will be based on your build system, and OS.  For example on Windows you would pass "component1" to open the file : component1.dll, and on Linux the same would open "libcomponent1.so".  Make sure the shared library is in the same directory as your executable or is in the current path.
+4) Load the dynamic link library. The module name passed to MasterFactory will be based on the build system, and OS.  For example on Windows pass "component1" to open the file : component1.dll, and on Linux the same would open "libcomponent1.so".  Make sure the shared library is in the same directory as the executable or is in the current path or in the path.
 
 ```c++
 
