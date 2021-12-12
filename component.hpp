@@ -92,7 +92,7 @@ public:
 protected:
 	friend class MasterFactory;
 
-	sp(Component *c) : m_ptr(dynamic_cast<T *>(c)) {}
+	sp(Component *c) : m_ptr(static_cast<T *>(c)) {}
 
 	std::shared_ptr<T> m_ptr;
 };
