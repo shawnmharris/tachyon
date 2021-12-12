@@ -70,7 +70,7 @@ public:
 
 	sp<T> &operator=(Component *c)
 	{
-		m_ptr = std::make_shared(dynamic_cast<T *>(c));
+		m_ptr = std::make_shared(static_cast<T *>(c));
 		return this;
 	}
 
